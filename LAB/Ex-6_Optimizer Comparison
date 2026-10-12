@@ -1,0 +1,9 @@
+import tensorflow as tf
+
+for opt in [tf.keras.optimizers.SGD(), tf.keras.optimizers.SGD(momentum=0.9), tf.keras.optimizers.Adam()]:
+    w = tf.Variable(0.0)
+    for i in range(100):
+        with tf.GradientTape() as tape:
+            loss = (w - 5)**2
+        opt.apply_gradients([(tape.gradient(loss, w), w)])
+    print(type(opt).__name__, "Weight:", round(w.numpy(), 3))
