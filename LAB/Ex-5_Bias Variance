@@ -1,0 +1,18 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+
+X = np.linspace(-3, 3, 20).reshape(-1, 1)
+y = X.ravel()**2 + np.random.randn(20) * 0.5
+X_test = np.linspace(-3, 3, 100).reshape(-1, 1)
+
+for d in [1, 2, 10]:
+    model = make_pipeline(PolynomialFeatures(d), LinearRegression())
+    model.fit(X, y)
+    plt.plot(X_test, model.predict(X_test), label=f"Degree {d}")
+
+plt.scatter(X, y)
+plt.legend()
+plt.show()
