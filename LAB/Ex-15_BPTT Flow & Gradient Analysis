@@ -1,0 +1,20 @@
+import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = tf.Variable([[1.0, 2.0, 3.0]])
+
+with tf.GradientTape() as tape:
+    y = tf.reduce_sum(x * x * x)
+
+gradient = tape.gradient(y, x)
+
+print("Input:", x.numpy())
+print("Output:", y.numpy())
+print("Gradient:", gradient.numpy())
+
+plt.plot(gradient.numpy()[0], marker='o')
+plt.title("BPTT Gradient Analysis")
+plt.xlabel("Time Steps")
+plt.ylabel("Gradient")
+plt.show()
