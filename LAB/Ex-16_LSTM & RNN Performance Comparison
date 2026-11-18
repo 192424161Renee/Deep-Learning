@@ -1,0 +1,20 @@
+import numpy as np
+import tensorflow as tf
+
+X = np.array([[1,2,3],[2,3,4],[3,4,5],[4,5,6]])
+y = np.array([4,5,6,7])
+
+X = X.reshape(4,3,1)
+
+for layer in [tf.keras.layers.SimpleRNN(16), tf.keras.layers.LSTM(16)]:
+    model = tf.keras.Sequential([
+        tf.keras.layers.Input(shape=(3,1)),
+        layer,
+        tf.keras.layers.Dense(1)
+    ])
+
+    model.compile(optimizer='adam', loss='mse')
+    model.fit(X, y, epochs=50, verbose=0)
+
+    print(type(layer).__name__)
+    print("Loss:", model.evaluate(X, y, verbose=0))
