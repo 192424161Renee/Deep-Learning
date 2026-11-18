@@ -1,0 +1,20 @@
+import numpy as np
+import tensorflow as tf
+import pandas as pd
+
+data = np.array([10,20,30,40,50,60,70,80])
+
+X = np.array([[data[i], data[i+1], data[i+2]] for i in range(5)])
+y = np.array([data[i+3] for i in range(5)])
+
+X = X.reshape(5,3,1)
+
+model = tf.keras.Sequential([
+    tf.keras.layers.SimpleRNN(16, input_shape=(3,1)),
+    tf.keras.layers.Dense(1)
+])
+
+model.compile(optimizer='adam', loss='mse')
+model.fit(X, y, epochs=100, verbose=0)
+
+print("Predicted Value:", model.predict(np.array([[[60],[70],[80]]]), verbose=0))
